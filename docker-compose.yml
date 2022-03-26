@@ -1,0 +1,15 @@
+version: '3'
+
+services:
+  film_database:
+    image: postgres:13.6-alpine3.15
+    environment:
+      POSTGRES_DB: filmdb
+      POSTGRES_PASSWORD: pass
+      POSTGRES_USER: development
+    volumes:
+      - db-data:/var/lib/postgresql/data:rw
+    ports:
+      - "5432:5432"
+volumes:
+  db-data:
