@@ -89,8 +89,14 @@
     "laminas/laminas-code": {
         "version": "4.5.1"
     },
+    "league/csv": {
+        "version": "9.8.0"
+    },
     "nikic/php-parser": {
         "version": "v4.13.2"
+    },
+    "predis/predis": {
+        "version": "v1.1.10"
     },
     "psr/cache": {
         "version": "3.0.0"

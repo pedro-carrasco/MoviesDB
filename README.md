@@ -91,9 +91,7 @@ Actor o-- City: 1..n
 
 
 # Decisiones técnicas
-## Tipos de datos en la BBDD
+## Tipos de datos en la BB.DD.
 En base de datos he utilizado el tipo int para los ids, si fuese una API habría que evaluar si utilizar un tipo
 de datos UUID para los ids que se expusiesen en los endpoints de la API. Para lograr el máximo rendimiento en 
 consultas es recomendable utilizar int para ids en tablas sobre las que se hagan JOIN o consultas relacionadas.
-
-
