@@ -3,7 +3,7 @@ declare(strict_types=1);
 
 namespace App\Controller\FilmDashBoard;
 
-use App\Controller\Admin\ActorCrudController;
+use App\Controller\Admin\PersonCrudController;
 use App\Controller\Admin\MovieCrudController;
 use App\Entity\Movie;
 use App\Entity\Person;
@@ -36,9 +36,7 @@ final class MovieDashBoardController extends AbstractDashboardController
             MenuItem::linkToDashboard('Inicio', 'fa fa-home'),
             MenuItem::section('Menú'),
             MenuItem::linkToCrud('Películas', 'fa fa-tags', Movie::class),
-            MenuItem::linkToCrud('Actores', 'fa fa-solid fa-theater-masks', Person::class)
-                ->setController(ActorCrudController::class),
-            MenuItem::linkToCrud('Directores', 'fa fa-solid fa-video', Person::class),
+            MenuItem::linkToCrud('Actores, Directores y Productores', 'fa fa-solid fa-theater-masks', Person::class)
         ];
     }
 }

@@ -5,11 +5,11 @@ namespace App\Entity;
 
 use App\Repository\DoctrinePersonRepository;
 use DateTime;
+use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 
 #[ORM\Entity(repositoryClass: DoctrinePersonRepository::class)]
 #[ORM\Index(columns: ["name"], name: "person_name_idx")]
-#[ORM\Cache('READ_ONLY')]
 class Person
 {
     #[ORM\Id]
@@ -27,16 +27,16 @@ class Person
     private ?DateTime $deathDate;
 
     #[ORM\Column(type: 'string', length: 255, nullable: true)]
-    private string $city;
+    private ?string $city;
 
     #[ORM\OneToMany(mappedBy: "producer", targetEntity: Movie::class, fetch: 'LAZY')]
-    private $moviesProduced;
+    private Collection $moviesProduced;
 
-    #[ORM\ManyToMany(mappedBy: "directors", targetEntity: Movie::class, fetch: 'LAZY')]
-    private $moviesDirected;
+    #[ORM\ManyToMany(targetEntity: Movie::class, mappedBy: "directors", fetch: 'LAZY')]
+    private Collection $moviesDirected;
 
-    #[ORM\ManyToMany(mappedBy: "actors", targetEntity: Movie::class, fetch: 'LAZY')]
-    private $moviesAsActor;
+    #[ORM\ManyToMany(targetEntity: Movie::class, mappedBy: "actors", fetch: 'LAZY')]
+    private Collection $moviesAsActor;
 
     public function __construct(
         string $name,
@@ -106,8 +106,33 @@ class Person
         return $this->name;
     }
 
-    public function moviesAsActor(): string
+    public function listMoviesAsActor(): string
     {
         return implode(', ', $this->moviesAsActor->toArray());
+    }
+
+    public function moviesAsActor(): Collection
+    {
+        return $this->moviesAsActor;
+    }
+
+    public function listMoviesAsDirector(): string
+    {
+        return implode(', ', $this->moviesDirected->toArray());
+    }
+
+    public function listMoviesAsProducer(): string
+    {
+        return implode(', ', $this->moviesProduced->toArray());
+    }
+
+    public function moviesDirected(): Collection
+    {
+        return $this->moviesDirected;
+    }
+
+    public function moviesProduced(): Collection
+    {
+        return $this->moviesProduced;
     }
 }
