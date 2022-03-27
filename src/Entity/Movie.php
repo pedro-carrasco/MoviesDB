@@ -147,4 +147,11 @@ class Movie
             $this->directors->add($director);
         }
     }
+
+    public function __toString(): string
+    {
+        return $this->title;
+    }
+
+
 }

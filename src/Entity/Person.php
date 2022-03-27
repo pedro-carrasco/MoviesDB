@@ -106,5 +106,8 @@ class Person
         return $this->name;
     }
 
-
+    public function moviesAsActor(): string
+    {
+        return implode(', ', $this->moviesAsActor->toArray());
+    }
 }
