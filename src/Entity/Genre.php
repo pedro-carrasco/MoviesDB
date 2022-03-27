@@ -7,7 +7,7 @@ use Doctrine\ORM\Mapping as ORM;
 use App\Repository\DoctrineGenreRepository;
 
 #[ORM\Entity(repositoryClass: DoctrineGenreRepository::class)]
-#[ORM\Cache(usage: 'NONSTRICT_READ_WRITE')]
+#[ORM\Index(columns: ["name"], name: "genre_name_idx")]
 final class Genre
 {
     #[ORM\Id]

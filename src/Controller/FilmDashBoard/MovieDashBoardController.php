@@ -3,11 +3,10 @@ declare(strict_types=1);
 
 namespace App\Controller\FilmDashBoard;
 
-use App\Controller\Admin\FilmCrudController;
-use App\Entity\Actor;
+use App\Controller\Admin\MovieCrudController;
 use App\Entity\Director;
-use App\Entity\Film;
-use EasyCorp\Bundle\EasyAdminBundle\Config\Actions;
+use App\Entity\Movie;
+use App\Entity\Person;
 use EasyCorp\Bundle\EasyAdminBundle\Config\Dashboard;
 use EasyCorp\Bundle\EasyAdminBundle\Config\MenuItem;
 use EasyCorp\Bundle\EasyAdminBundle\Controller\AbstractDashboardController;
@@ -15,12 +14,12 @@ use EasyCorp\Bundle\EasyAdminBundle\Router\AdminUrlGenerator;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 
-final class FilmDashBoardController extends AbstractDashboardController
+final class MovieDashBoardController extends AbstractDashboardController
 {
     public function configureDashboard(): Dashboard
     {
         return Dashboard::new()
-            ->setTitle('Films DB');
+            ->setTitle('Movies Database');
     }
 
     #[Route('/')]
@@ -28,7 +27,7 @@ final class FilmDashBoardController extends AbstractDashboardController
     {
         $adminUrlGenerator = $this->container->get(AdminUrlGenerator::class);
 
-        return $this->redirect($adminUrlGenerator->setController(FilmCrudController::class)->generateUrl());
+        return $this->redirect($adminUrlGenerator->setController(MovieCrudController::class)->generateUrl());
     }
 
     public function configureMenuItems(): iterable
@@ -36,8 +35,8 @@ final class FilmDashBoardController extends AbstractDashboardController
         return [
             MenuItem::linkToDashboard('Inicio', 'fa fa-home'),
             MenuItem::section('Menú'),
-            MenuItem::linkToCrud('Películas', 'fa fa-tags', Film::class),
-            MenuItem::linkToCrud('Actores', 'fa fa-solid fa-theater-masks', Actor::class),
+            MenuItem::linkToCrud('Películas', 'fa fa-tags', Movie::class),
+            MenuItem::linkToCrud('Actores', 'fa fa-solid fa-theater-masks', Person::class),
             MenuItem::linkToCrud('Directores', 'fa fa-solid fa-video', Director::class),
         ];
     }

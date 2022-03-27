@@ -3,14 +3,13 @@ declare(strict_types=1);
 
 namespace App\Entity;
 
-use App\Repository\DoctrineActorRepository;
-use ContainerNWJf1n1\getDoctrine_DatabaseCreateCommandService;
+use App\Repository\DoctrinePersonRepository;
 use DateTime;
 use Doctrine\ORM\Mapping as ORM;
 
-#[ORM\Entity(repositoryClass: DoctrineActorRepository::class)]
-#[ORM\Cache(usage: 'NONSTRICT_READ_WRITE')]
-final class Actor
+#[ORM\Entity(repositoryClass: DoctrinePersonRepository::class)]
+#[ORM\Index(columns: ["name"], name: "person_name_idx")]
+final class Person
 {
     #[ORM\Id]
     #[ORM\GeneratedValue]
@@ -28,6 +27,15 @@ final class Actor
 
     #[ORM\Column(type: 'string', length: 255, nullable: true)]
     private string $city;
+
+    #[ORM\OneToMany(mappedBy: "producer", targetEntity: Movie::class, fetch: 'LAZY')]
+    private $moviesProduced;
+
+    #[ORM\ManyToMany(mappedBy: "directors", targetEntity: Movie::class, fetch: 'LAZY')]
+    private $moviesDirected;
+
+    #[ORM\ManyToMany(mappedBy: "actors", targetEntity: Movie::class, fetch: 'LAZY')]
+    private $moviesAsActor;
 
     public function __construct(
         string $name,

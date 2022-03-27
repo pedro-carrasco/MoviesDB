@@ -3,27 +3,19 @@ declare(strict_types=1);
 
 namespace App\Service;
 
-use App\Entity\Actor;
-use App\Entity\Director;
-use App\Entity\Film;
+use App\Entity\Movie;
 use App\Entity\Genre;
-use App\Entity\Producer;
-use App\Repository\DoctrineActorRepository;
-use App\Repository\DoctrineDirectorRepository;
-use App\Repository\DoctrineFilmRepository;
+use App\Entity\Person;
 use App\Repository\DoctrineGenreRepository;
-use App\Repository\DoctrineProducerRepository;
+use App\Repository\DoctrinePersonRepository;
 use App\Repository\DTO\ImportedCSVData;
 use Doctrine\Persistence\ManagerRegistry;
-use Symfony\Component\Config\Resource\DirectoryResource;
 
 final class ImportCSVDataService
 {
     public function __construct(
-        private DoctrineActorRepository $actorRepository,
+        private DoctrinePersonRepository $personRepository,
         private DoctrineGenreRepository $genreRepository,
-        private DoctrineDirectorRepository $directorRepository,
-        private DoctrineProducerRepository $producerRepository,
         private ManagerRegistry $managerRegistry
     )
     {
@@ -40,7 +32,7 @@ final class ImportCSVDataService
             $genres = $this->getGenres($item->genres);
             $producer = $this->getProducer($item->producer);
 
-            $film = new Film();
+            $film = new Movie();
             $film->setTitle($item->title);
             $film->setDuration($item->duration);
             $film->setPublicationDate($item->publicationDate);
@@ -53,11 +45,12 @@ final class ImportCSVDataService
         }
 
         $this->managerRegistry->getManager()->flush();
+        $this->managerRegistry->getManager()->clear();
     }
 
     /**
      * @param string[] $actors
-     * @return Actor[]
+     * @return Person[]
      */
     private function getActors(array $actors): array
     {
@@ -65,7 +58,7 @@ final class ImportCSVDataService
 
         foreach ($actors as $actorName) {
             $actorName = trim($actorName);
-            $actor = $this->actorRepository->findOneBy(['name' => $actorName]);
+            $actor = $this->personRepository->findOneBy(['name' => $actorName]);
 
             $result[] = $actor ?? $this->saveActor($actorName);
         }
@@ -75,15 +68,15 @@ final class ImportCSVDataService
 
     /**
      * @param string[] $directors
-     * @return Director[]
+     * @return Person[]
      */
-    private function getDirectors(array $directors)
+    private function getDirectors(array $directors): array
     {
         $result = [];
 
         foreach ($directors as $directorName) {
             $directorName = trim($directorName);
-            $director = $this->directorRepository->findOneBy(['name' => $directorName]);
+            $director = $this->personRepository->findOneBy(['name' => $directorName]);
 
             $result[] = $director ?? $this->saveDirector($directorName);
         }
@@ -109,10 +102,10 @@ final class ImportCSVDataService
         return $result;
     }
 
-    private function getProducer(string $producerName): Producer
+    private function getProducer(string $producerName): Person
     {
         $producerName = trim($producerName);
-        $producer = $this->producerRepository->findOneBy(['name' => $producerName]);
+        $producer = $this->personRepository->findOneBy(['name' => $producerName]);
 
         return $producer ?? $this->saveProducer($producerName);
     }
@@ -121,31 +114,31 @@ final class ImportCSVDataService
     {
         $genre = new Genre($genreName);
         $this->managerRegistry->getManager()->persist($genre);
-        $this->managerRegistry->getManager()->flush($genre);
+        $this->managerRegistry->getManager()->flush();
         return $genre;
     }
 
-    private function saveProducer(string $producerName): Producer
+    private function saveProducer(string $producerName): Person
     {
-        $producer = new Producer($producerName);
+        $producer = new Person($producerName);
         $this->managerRegistry->getManager()->persist($producer);
-        $this->managerRegistry->getManager()->flush($producer);
+        $this->managerRegistry->getManager()->flush();
         return $producer;
     }
 
-    private function saveDirector(string $directorName): Director
+    private function saveDirector(string $directorName): Person
     {
-        $director = new Director($directorName);
+        $director = new Person($directorName);
         $this->managerRegistry->getManager()->persist($director);
-        $this->managerRegistry->getManager()->flush($director);
+        $this->managerRegistry->getManager()->flush();
         return $director;
     }
 
-    private function saveActor(string $actorName): Actor
+    private function saveActor(string $actorName): Person
     {
-        $actor = new Actor($actorName);
+        $actor = new Person($actorName);
         $this->managerRegistry->getManager()->persist($actor);
-        $this->managerRegistry->getManager()->flush($actor);
+        $this->managerRegistry->getManager()->flush();
         return $actor;
     }
 }

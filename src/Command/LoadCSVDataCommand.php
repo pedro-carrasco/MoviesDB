@@ -45,16 +45,7 @@ final class LoadCSVDataCommand extends Command
             $this->checkFileExists($file);
             $content = $this->readFile($file);
 
-            $data = $this->importContentToDB($content, $output);
-
-
-
-            for($i = 0; $i <= $totalSteps; $i++) {
-                $dataToProcess = array_slice($data, $i * 1000, 1000);
-
-                $progressBar->advance();
-            }
-            $progressBar->finish();
+            $this->importContentToDB($content, $output);
 
             return Command::SUCCESS;
         } catch (RuntimeException $e) {
@@ -94,9 +85,6 @@ final class LoadCSVDataCommand extends Command
         ]);
     }
 
-    /**
-     * @return ImportedCSVData[]
-     */
     private function importContentToDB(Iterator $content, OutputInterface $output)
     {
         $output->writeln('Importando datos');
@@ -121,7 +109,7 @@ final class LoadCSVDataCommand extends Command
                 $dataToProcess[] = $importedCSVData;
                 $i++;
 
-                if(0 === ($i % 1000)) {
+                if(0 === ($i % 100)) {
                     $i = 0;
                     $this->dataService->execute($dataToProcess);
                     $dataToProcess = [];

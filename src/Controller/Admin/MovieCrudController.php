@@ -2,7 +2,7 @@
 
 namespace App\Controller\Admin;
 
-use App\Entity\Film;
+use App\Entity\Movie;
 use EasyCorp\Bundle\EasyAdminBundle\Config\Action;
 use EasyCorp\Bundle\EasyAdminBundle\Config\Actions;
 use EasyCorp\Bundle\EasyAdminBundle\Config\Crud;
@@ -10,18 +10,18 @@ use EasyCorp\Bundle\EasyAdminBundle\Controller\AbstractCrudController;
 use EasyCorp\Bundle\EasyAdminBundle\Field\DateField;
 use EasyCorp\Bundle\EasyAdminBundle\Field\TextField;
 
-class FilmCrudController extends AbstractCrudController
+class MovieCrudController extends AbstractCrudController
 {
     public static function getEntityFqcn(): string
     {
-        return Film::class;
+        return Movie::class;
     }
 
     public function configureCrud(Crud $crud): Crud
     {
         return $crud
             ->setPageTitle('index', 'Películas')
-            ->setPageTitle('detail', fn (Film $film) => sprintf('Película: <b>%s</b>', $film->title()))
+            ->setPageTitle('detail', fn (Movie $film) => sprintf('Película: <b>%s</b>', $film->title()))
             ->setSearchFields([
                 'title',
             ]);

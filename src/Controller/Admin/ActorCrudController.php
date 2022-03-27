@@ -2,14 +2,14 @@
 
 namespace App\Controller\Admin;
 
-use App\Entity\Actor;
+use App\Entity\Person;
 use EasyCorp\Bundle\EasyAdminBundle\Controller\AbstractCrudController;
 
 class ActorCrudController extends AbstractCrudController
 {
     public static function getEntityFqcn(): string
     {
-        return Actor::class;
+        return Person::class;
     }
 
     /*

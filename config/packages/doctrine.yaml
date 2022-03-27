@@ -13,21 +13,6 @@ doctrine:
                 prefix: 'App\Entity'
                 alias: App
                 type: attribute
-        metadata_cache_driver:
-            type: pool
-            pool: doctrine.second_level_cache_pool
-        query_cache_driver:
-            type: pool
-            pool: doctrine.second_level_cache_pool
-        result_cache_driver:
-            type: pool
-            pool: doctrine.second_level_cache_pool
-        second_level_cache:
-            enabled: true
-            region_lifetime: 30
-            region_cache_driver:
-                type: pool
-                pool: doctrine.second_level_cache_pool
 when@test:
     doctrine:
         dbal:

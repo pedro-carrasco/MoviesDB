@@ -7,11 +7,9 @@ use App\Repository\DoctrineFilmRepository;
 use DateTime;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\ORM\Mapping as ORM;
-use Doctrine\ORM\PersistentCollection;
-use JetBrains\PhpStorm\Pure;
 
 #[ORM\Entity(repositoryClass: DoctrineFilmRepository::class)]
-final class Film
+final class Movie
 {
     #[ORM\Id]
     #[ORM\GeneratedValue]
@@ -30,16 +28,17 @@ final class Film
     #[ORM\ManyToMany(targetEntity: Genre::class, cascade: ['persist'])]
     private $genres;
 
-    #[ORM\ManyToOne(targetEntity: Producer::class, cascade: ['persist'])]
-    private Producer $producer;
+    #[ORM\ManyToOne(targetEntity: Person::class, cascade: ['persist'], inversedBy: "moviesProduced")]
+    private Person $producer;
 
-    #[ORM\ManyToMany(targetEntity: Actor::class, cascade: ['persist'])]
+    #[ORM\ManyToMany(targetEntity: Person::class, inversedBy: "moviesAsActor", cascade: ['persist'])]
+    #[ORM\JoinTable("movie_actors")]
     private $actors;
 
-    #[ORM\ManyToMany(targetEntity: Director::class, cascade: ['persist'])]
+    #[ORM\ManyToMany(targetEntity: Person::class, inversedBy: "moviesDirected", cascade: ['persist'])]
+    #[ORM\JoinTable("movie_directors")]
     private $directors;
 
-    #[Pure]
     public function __construct()
     {
         $this->genres = new ArrayCollection();
@@ -105,12 +104,12 @@ final class Film
         }
     }
 
-    public function producer(): Producer
+    public function producer(): Person
     {
         return $this->producer;
     }
 
-    public function setProducer(Producer $producer): void
+    public function setProducer(Person $producer): void
     {
         $this->producer = $producer;
     }
