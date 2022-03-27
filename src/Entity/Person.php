@@ -9,6 +9,7 @@ use Doctrine\ORM\Mapping as ORM;
 
 #[ORM\Entity(repositoryClass: DoctrinePersonRepository::class)]
 #[ORM\Index(columns: ["name"], name: "person_name_idx")]
+#[ORM\Cache('READ_ONLY')]
 final class Person
 {
     #[ORM\Id]
