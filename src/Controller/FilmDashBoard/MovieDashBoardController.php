@@ -4,7 +4,6 @@ declare(strict_types=1);
 namespace App\Controller\FilmDashBoard;
 
 use App\Controller\Admin\MovieCrudController;
-use App\Entity\Director;
 use App\Entity\Movie;
 use App\Entity\Person;
 use EasyCorp\Bundle\EasyAdminBundle\Config\Dashboard;
@@ -37,7 +36,7 @@ final class MovieDashBoardController extends AbstractDashboardController
             MenuItem::section('Menú'),
             MenuItem::linkToCrud('Películas', 'fa fa-tags', Movie::class),
             MenuItem::linkToCrud('Actores', 'fa fa-solid fa-theater-masks', Person::class),
-            MenuItem::linkToCrud('Directores', 'fa fa-solid fa-video', Director::class),
+            MenuItem::linkToCrud('Directores', 'fa fa-solid fa-video', Person::class),
         ];
     }
 }

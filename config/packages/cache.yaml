@@ -5,4 +5,4 @@ framework:
         pools:
             doctrine.second_level_cache_pool:
                 adapter: cache.app
-                default_lifetime: 3600
+                default_lifetime: 300

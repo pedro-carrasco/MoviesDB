@@ -9,7 +9,7 @@ use App\Repository\DoctrineGenreRepository;
 #[ORM\Entity(repositoryClass: DoctrineGenreRepository::class)]
 #[ORM\Index(columns: ["name"], name: "genre_name_idx")]
 #[ORM\Cache('READ_ONLY')]
-final class Genre
+class Genre
 {
     #[ORM\Id]
     #[ORM\GeneratedValue]

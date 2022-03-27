@@ -2,7 +2,6 @@
 
 namespace App\Controller\Admin;
 
-use App\Entity\Director;
 use App\Entity\Person;
 use EasyCorp\Bundle\EasyAdminBundle\Controller\AbstractCrudController;
 

@@ -99,11 +99,11 @@ final class LoadCSVDataCommand extends Command
                 $importedCSVData = new ImportedCSVData(
                     $film['title'],
                     $this->getDate($film['date_published']),
-                    explode(',', $film['genre']),
+                    preg_split ('/(\s*,*\s*)*,+(\s*,*\s*)*/', $film['genre']),
                     (int)$film['duration'],
-                    explode(',', $film['director']),
+                    preg_split ('/(\s*,*\s*)*,+(\s*,*\s*)*/', $film['director']),
                     $film['production_company'],
-                    explode(',', $film['actors'])
+                    preg_split ('/(\s*,*\s*)*,+(\s*,*\s*)*/', $film['actors'])
                 );
 
                 $dataToProcess[] = $importedCSVData;
@@ -117,7 +117,6 @@ final class LoadCSVDataCommand extends Command
             }
             $progressBar->advance();
         }
-
         $this->dataService->execute($dataToProcess);
     }
 
