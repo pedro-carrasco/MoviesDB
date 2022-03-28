@@ -2,6 +2,7 @@
 
 namespace App\Controller\Admin;
 
+use App\Controller\Admin\Filters\MoviesAsDirectorFilter;
 use App\Entity\Person;
 use Doctrine\ORM\QueryBuilder;
 use EasyCorp\Bundle\EasyAdminBundle\Collection\FieldCollection;
@@ -30,7 +31,7 @@ class DirectorCrudController extends AbstractCrudController
     public function configureCrud(Crud $crud): Crud
     {
         return $crud
-            ->setPageTitle('index', 'Actores')
+            ->setPageTitle('index', 'Directores')
             ->setPageTitle('edit', fn(Person $actor) => sprintf('Actor: <b>%s</b>', $actor->name()))
             ->setSearchFields([
                 'name',
@@ -41,9 +42,7 @@ class DirectorCrudController extends AbstractCrudController
     {
         return [
             TextField::new('name', 'Nombre'),
-            TextField::new('listMoviesAsActor', 'Películas en las que participa')->hideOnDetail()->hideOnForm(),
             TextField::new('listMoviesAsDirector', 'Películas dirigidas')->hideOnDetail()->hideOnForm(),
-            TextField::new('listMoviesAsProducer', 'Películas producidas')->hideOnDetail()->hideOnForm(),
             TextField::new('birthDate', 'Fecha de nacimiento')->hideOnIndex(),
             TextField::new('deathDate', 'Fecha de fallecimiento')->hideOnIndex(),
             TextField::new('city', 'Lugar de nacimiento')->hideOnIndex(),
@@ -54,7 +53,8 @@ class DirectorCrudController extends AbstractCrudController
     public function configureFilters(Filters $filters): Filters
     {
         return parent::configureFilters($filters)
-            ->add('name');
+            ->add('name')
+            ->add(MoviesAsDirectorFilter::new('moviesDirected'));
     }
 
     public function createIndexQueryBuilder(

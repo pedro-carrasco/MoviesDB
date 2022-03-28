@@ -2,6 +2,7 @@
 
 namespace App\Controller\Admin;
 
+use App\Controller\Admin\Filters\MoviesAsActorFilter;
 use App\Entity\Person;
 use Doctrine\ORM\QueryBuilder;
 use EasyCorp\Bundle\EasyAdminBundle\Collection\FieldCollection;
@@ -42,8 +43,6 @@ class ActorCrudController extends AbstractCrudController
         return [
             TextField::new('name', 'Nombre'),
             TextField::new('listMoviesAsActor', 'Películas en las que participa')->hideOnDetail()->hideOnForm(),
-            TextField::new('listMoviesAsDirector', 'Películas dirigidas')->hideOnDetail()->hideOnForm(),
-            TextField::new('listMoviesAsProducer', 'Películas producidas')->hideOnDetail()->hideOnForm(),
             TextField::new('birthDate', 'Fecha de nacimiento')->hideOnIndex(),
             TextField::new('deathDate', 'Fecha de fallecimiento')->hideOnIndex(),
             TextField::new('city', 'Lugar de nacimiento')->hideOnIndex(),
@@ -54,7 +53,8 @@ class ActorCrudController extends AbstractCrudController
     public function configureFilters(Filters $filters): Filters
     {
         return parent::configureFilters($filters)
-            ->add('name');
+            ->add('name')
+            ->add(MoviesAsActorFilter::new('moviesAsActor'));
     }
 
     public function createIndexQueryBuilder(
