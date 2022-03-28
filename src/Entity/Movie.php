@@ -19,8 +19,8 @@ class Movie
     #[ORM\Column(type: 'string', length: 255)]
     private string $title;
 
-    #[ORM\Column(type: 'date')]
-    private DateTime $publicationDate;
+    #[ORM\Column(type: 'date', nullable: true)]
+    private ?DateTime $publicationDate;
 
     #[ORM\Column(type: 'integer')]
     private int $duration;
