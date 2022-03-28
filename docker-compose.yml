@@ -3,6 +3,7 @@ version: '3'
 services:
   film_database:
     image: postgres:13.6-alpine3.15
+    restart: on-failure
     environment:
       POSTGRES_DB: filmdb
       POSTGRES_PASSWORD: pass
@@ -11,6 +12,7 @@ services:
       - db-data:/var/lib/postgresql/data:rw
     ports:
       - "5432:5432"
+
   cache:
     image: redis:6.2.6-alpine
     restart: always
@@ -19,6 +21,22 @@ services:
     command: redis-server --save 20 1 --loglevel warning
     volumes:
       - cache:/data
+
+  film_app:
+    image: pcarrascoponce/filmdb:0.1
+    container_name: film_app
+    environment:
+      DATABASE_URL: "postgresql://development:pass@film_database:5432/filmdb?serverVersion=13&charset=utf8"
+      PHP_MEMORY_LIMIT: 2048M
+    ports:
+      - "8000:8000"
+    volumes:
+      - code:/usr/src/filmdb
+    depends_on:
+      - film_database
+      - cache
+    restart: on-failure
 volumes:
   db-data:
   cache:
+  code:

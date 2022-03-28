@@ -10,6 +10,9 @@ use EasyCorp\Bundle\EasyAdminBundle\Config\Filters;
 use EasyCorp\Bundle\EasyAdminBundle\Controller\AbstractCrudController;
 use EasyCorp\Bundle\EasyAdminBundle\Field\DateField;
 use EasyCorp\Bundle\EasyAdminBundle\Field\TextField;
+use EasyCorp\Bundle\EasyAdminBundle\Filter\ComparisonFilter;
+use EasyCorp\Bundle\EasyAdminBundle\Filter\EntityFilter;
+use EasyCorp\Bundle\EasyAdminBundle\Filter\TextFilter;
 
 class MovieCrudController extends AbstractCrudController
 {
@@ -55,7 +58,6 @@ class MovieCrudController extends AbstractCrudController
     {
         return parent::configureFilters($filters)
             ->add('title')
-            ->add('directors')
-            ->add('genres');
+            ->add('genres', 'Géneros');
     }
 }

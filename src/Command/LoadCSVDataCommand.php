@@ -124,14 +124,18 @@ final class LoadCSVDataCommand extends Command
     {
         $dateFields = explode('-', $date);
 
-        $result = new DateTime();
-        $result->setTime(0,0,0);
-        $result->setDate(
-            (int)$dateFields[0],
-            (int)($dateFields[1] ?? 1),
-            (int)($dateFields[2] ?? 1)
-        );
+        $year = (int)$dateFields[0];
+        $month = (int)($dateFields[1] ?? 1);
+        $day = (int)($dateFields[2] ?? 1);
 
-        return $result;
+        if(checkdate($month,$day, $year)) {
+            $result = new DateTime();
+            $result->setTime(0, 0, 0);
+            $result->setDate($year, $month, $day);
+
+            return $result;
+        }
+
+        return null;
     }
 }

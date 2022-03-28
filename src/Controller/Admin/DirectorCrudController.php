@@ -13,10 +13,9 @@ use EasyCorp\Bundle\EasyAdminBundle\Config\Filters;
 use EasyCorp\Bundle\EasyAdminBundle\Controller\AbstractCrudController;
 use EasyCorp\Bundle\EasyAdminBundle\Dto\EntityDto;
 use EasyCorp\Bundle\EasyAdminBundle\Dto\SearchDto;
-use EasyCorp\Bundle\EasyAdminBundle\Field\AssociationField;
 use EasyCorp\Bundle\EasyAdminBundle\Field\TextField;
 
-class PersonCrudController extends AbstractCrudController
+class DirectorCrudController extends AbstractCrudController
 {
     public static function getEntityFqcn(): string
     {
@@ -55,9 +54,20 @@ class PersonCrudController extends AbstractCrudController
     public function configureFilters(Filters $filters): Filters
     {
         return parent::configureFilters($filters)
-            ->add('name')
-            ->add('moviesAsActor')
-            ->add('moviesDirected')
-            ->add('moviesProduced');
+            ->add('name');
+    }
+
+    public function createIndexQueryBuilder(
+        SearchDto $searchDto,
+        EntityDto $entityDto,
+        FieldCollection $fields,
+        FilterCollection $filters
+    ): QueryBuilder {
+        return parent::createIndexQueryBuilder($searchDto,
+            $entityDto,
+            $fields,
+            $filters)
+            ->innerJoin('entity.moviesDirected', 'movies_as_director');
+
     }
 }

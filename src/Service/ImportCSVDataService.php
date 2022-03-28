@@ -26,6 +26,9 @@ final class ImportCSVDataService
      */
     public function execute(array $data): void
     {
+        $sqlLogger = $this->managerRegistry->getConnection()->getConfiguration()->getSQLLogger();
+        $this->managerRegistry->getConnection()->getConfiguration()->setSQLLogger(null);
+
         foreach ($data as $item) {
             $actors = $this->getActors($item->actors);
             $directors = $this->getDirectors($item->directors);
@@ -46,6 +49,8 @@ final class ImportCSVDataService
 
         $this->managerRegistry->getManager()->flush();
         $this->managerRegistry->getManager()->clear();
+
+        $this->managerRegistry->getConnection()->getConfiguration()->setSQLLogger($sqlLogger);
     }
 
     /**
