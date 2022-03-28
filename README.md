@@ -7,16 +7,15 @@ de datos UUID para los ids que se expusiesen en los endpoints de la API. Para lo
 consultas es recomendable utilizar int para ids en tablas sobre las que se hagan JOIN o consultas relacionadas.
 
 ## EasyAdmin
-Hace muchos años que no usaba EasyAdmin, de hecho nunca lo usaría por la poca escalabilidad que tiene. En este caso
-cuando se carga toda la base de datos los filtros de películas darían OutOfMemory, imagino que tendría que hacer CustomFilters con 
-las tablas asociadas (Movies), pero no me he puesto a investigar con eso. En estos casos la interfaz de usuario
-la hacemos personalizada y normalmente estas cosas las hacemos con endpoints REST o similar y frontends tipo SPA.
+Hace muchos años que no usaba EasyAdmin, de hecho nunca lo usaría por la poca escalabilidad que tiene. En estos casos 
+la interfaz de usuario la hacemos personalizada y normalmente estas cosas las hacemos con endpoints REST o similar y 
+frontends tipo SPA.
 
 ## Caché
 Para guardar los datos utilizo la caché Redis.
 
 ## Docker
-En desarrollo he creado el dockercompose con los servicios y la imagen ya compilada (se puede ver la compilación el 
+En desarrollo he creado el docker-compose con los servicios y la imagen ya compilada (se puede ver la compilación el 
 Dockerfile)
 
 ## Inicio de la aplicación
