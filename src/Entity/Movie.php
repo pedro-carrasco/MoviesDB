@@ -67,12 +67,12 @@ class Movie
         $this->title = $title;
     }
 
-    public function publicationDate(): DateTime
+    public function publicationDate(): ?DateTime
     {
         return $this->publicationDate;
     }
 
-    public function setPublicationDate(DateTime $publicationDate): void
+    public function setPublicationDate(?DateTime $publicationDate): void
     {
         $this->publicationDate = $publicationDate;
     }
