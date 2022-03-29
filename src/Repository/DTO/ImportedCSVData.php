@@ -9,7 +9,7 @@ final class ImportedCSVData
 {
     public function __construct(
         public string $title,
-        public DateTime $publicationDate,
+        public ?DateTime $publicationDate,
         public array $genres,
         public int $duration,
         public array $directors,
