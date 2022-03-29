@@ -8,7 +8,7 @@ use App\Repository\DoctrineGenreRepository;
 
 #[ORM\Entity(repositoryClass: DoctrineGenreRepository::class)]
 #[ORM\Index(columns: ["name"], name: "genre_name_idx")]
-#[ORM\Cache('READ_ONLY')]
+#[ORM\Cache(usage: 'NONSTRICT_READ_WRITE')]
 class Genre
 {
     #[ORM\Id]
