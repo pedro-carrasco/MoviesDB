@@ -1,19 +1,5 @@
 # FilmDB
 
-# Decisiones técnicas
-## Tipos de datos en la BB.DD.
-En base de datos he utilizado el tipo int para los ids, si fuese una API habría que evaluar si utilizar un tipo
-de datos UUID para los ids que se expusiesen en los endpoints de la API. Para lograr el máximo rendimiento en 
-consultas es recomendable utilizar int para ids en tablas sobre las que se hagan JOIN o consultas relacionadas.
-
-## EasyAdmin
-Hace muchos años que no usaba EasyAdmin, de hecho nunca lo usaría por la poca escalabilidad que tiene. En estos casos 
-la interfaz de usuario la hacemos personalizada y normalmente estas cosas las hacemos con endpoints REST o similar y 
-frontends tipo SPA.
-
-## Caché
-Para guardar los datos utilizo la caché Redis.
-
 ## Docker
 En desarrollo he creado el docker-compose con los servicios y la imagen ya compilada (se puede ver la compilación el 
 Dockerfile)
